@@ -1,0 +1,11 @@
+db.createCollection("Teacher")
+
+db.Teacher.insert({_id:"101",Name:"Dev",Address:[{City:"Pune",Pin:"444043"}],Department:[{Dept_id:"111",Dept_name:"IT"}],Salary:"78000"})
+
+db.Teacher.aggregate([{$group:{_id:"$Department",total_salary:{$sum:"$Salary"}}}])
+
+db.Teacher.find()
+
+db.Teacher.aggregate([{$group:{_id:"$Department",totalsalary:{$sum:"$Salary"}}}])
+
+db.Teacher.aggregate([{$group:{_id:"$Department",totalsalary:{$sum:"$Salary"}}},{$group:{_id:"$_id.Department",AvgSal:{$sum:"totalsalary"}}])
