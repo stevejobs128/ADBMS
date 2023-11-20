@@ -1,0 +1,12 @@
+db.createCollection("Order")
+
+db.Order.insert({cust_id:"A123",amount:500,status:"A"})
+db.Order.insert({cust_id:"A123",amount:250,status:"A"})
+db.Order.insert({cust_id:"B212",amount:200,status:"A"})
+db.Order.insert({cust_id:"A123",amount:300,status:"D"})
+
+var mapFunction1 = function(){emit(this.cust_id,this.amount);};
+var reduceFunction1 = function(key,values){return Array.sum(values);};
+db.Order.mapReduce(mapFunction1,reduceFunction1,{query:{status:"A"},out:"order_totals"});
+
+db.order_totals.find();
